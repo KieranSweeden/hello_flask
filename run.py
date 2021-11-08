@@ -1,6 +1,6 @@
 import os
-# flask framework in lower caps, flask class in uppercase as it's a class
-from flask import Flask
+# flask framework in lower caps, flask class in uppercase as it's a class, render_template is function
+from flask import Flask, render_template
 
 # Create an instance of flask, storing it in variable named app
 # 1st parameter of Flask class, is the name of the application's
@@ -16,7 +16,7 @@ app = Flask(__name__)
 # then triggers the index function underneath and return the "Hello, World" text.
 @app.route("/")
 def index():
-    return "Hello World"
+    return render_template("index.html")
 
 
 # __main__ is the name of the default module in Python.
