@@ -19,6 +19,20 @@ def index():
     return render_template("index.html")
 
 
+@app.route("/about")
+def about():
+    return render_template("about.html")
+
+
+@app.route("/contact")
+def contact():
+    return render_template("contact.html")
+
+
+@app.route("/careers")
+def careers():
+    return render_template("careers.html")
+
 # __main__ is the name of the default module in Python.
 # This is the first one that we run, however if this has not been imported(which it won't be),
 # then it's going to be run directly
