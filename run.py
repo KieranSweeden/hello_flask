@@ -1,4 +1,5 @@
 import os
+import json
 # flask framework in lower caps, flask class in uppercase as it's a class, render_template is function
 from flask import Flask, render_template
 
@@ -21,7 +22,12 @@ def index():
 
 @app.route("/about")
 def about():
-    return render_template("about.html", page_title="About")
+    data = []
+
+    with open("data/company.json", "r") as json_data: # Open the company.json file as read only ("r") and store as json_data variable
+        data = json.load(json_data)
+
+    return render_template("about.html", page_title="About", company=data)
 
 
 @app.route("/contact")
