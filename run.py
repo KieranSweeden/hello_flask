@@ -1,7 +1,11 @@
 import os
 import json
 # flask framework in lower caps, flask class in uppercase as it's a class, render_template is function
-from flask import Flask, render_template
+from flask import Flask, render_template, request, flash
+# request library is going to finding out what method we used and will contain that form object that's been posted
+# flash library allows us to display messages with short timeouts, essentially being a "flashed message" to the user
+if os.path.exists("env.py"):
+    import env
 
 # Create an instance of flask, storing it in variable named app
 # 1st parameter of Flask class, is the name of the application's
@@ -9,6 +13,7 @@ from flask import Flask, render_template
 # Python variable __name__.
 # Flask needs this so that it knows where to look for templates & static files
 app = Flask(__name__)
+app.secret_key = os.environ.get("SECRET_KEY")
 
 
 # We're then using the app.route decorator, using the @ symbol, which is also
@@ -40,8 +45,15 @@ def about_member(member_name):
     return render_template("member.html", member=member) # 1st member is variable name being passed to html, 2nd member is object initialised on line 34
 
 
-@app.route("/contact")
+@app.route("/contact", methods=["GET", "POST"]) # Tells flask this particular view should accept both get and post methods, as it's only get by default
 def contact():
+    if request.method == "POST":
+        flash("Thanks {}, we have recieved your message!".format(
+            request.form.get("name"))) # name is injected within the {} of the flash message by the format method
+
+
+        # print(request.form.get("name")) # Access form data given using dot notation and get method as it returns an immutable dictionary - throws None value if nothing is there
+        # print(request.form["email"]) # Access form data given using square brackets - throws exception if nothing is there
     return render_template("contact.html", page_title="Contact")
 
 
